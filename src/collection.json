@@ -3,7 +3,8 @@
   "schematics": {
     "starter-kit": {
       "description": "A blank schematic.",
-      "factory": "./starter-kit/index#starterKit"
+      "factory": "./starter-kit/index#starterKit",
+      "schema":"./starter-kit/schema.json"
     }
   }
 }

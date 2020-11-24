@@ -1,0 +1,54 @@
+{
+    "$schema":"http://json-schema.org/schema",
+    "id":"ComponentSchematics",
+    "title": "Component Options Schema",
+    "type": "object",
+    "description": "the name of component",
+    "properties": {
+        "name":{
+            "type":"string",
+            "description": "the name of component",
+            "$default":{
+                "$source":"argv",
+                "index": 0
+            },
+            "x-prompt": "choose component name :"
+        }, 
+        "project": {
+            "type": "string",
+            "description": "The name of the project.",
+            "$default": {
+              "$source": "projectName"
+            }
+        },
+        "path":{
+            "type":"string",
+            "default": "src/app",
+            "description": "the path for component",
+            "$default":{
+                "$source":"argv",
+                "index": 0
+            },
+            "x-prompt": "choose path to create component :"
+        },
+        "withService": {
+            "type": "boolean",
+            "default": true,
+            "$default":{
+                "$source":"argv",
+                "index": 0
+            }
+        },
+        "withRoute": {
+            "type": "boolean",
+            "default": false,
+            "$default":{
+                "$source":"argv",
+                "index": 0
+            },
+          "x-prompt": "update default router module ?"
+        }
+    },
+    "required": ["name"]
+
+}
