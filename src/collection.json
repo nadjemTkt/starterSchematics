@@ -1,9 +1,9 @@
 {
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "starter-kit": {
-      "description": "A blank schematic.",
-      "factory": "./starter-kit/index#starterKit",
+    "custom-component-kit": {
+      "description": "custom component schematic.",
+      "factory": "./starter-kit/index#generateComponent",
       "schema":"./starter-kit/schema.json"
     }
   }
