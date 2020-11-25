@@ -21,7 +21,7 @@ export function generateComponent(_options: Schema): Rule {
 
     const parsedPath = parseName(defaultProjectPath, _options.name)
     const {name, path} = parsedPath;
-    console.log({name,path})
+   
     return chain([
       starterComponent(_options,tree,_context),
       moduleAddComponent(_options,tree,_context),
@@ -29,7 +29,6 @@ export function generateComponent(_options: Schema): Rule {
       moduleAddService(_options,tree,_context)
     ])(tree, _context);
   };
-  
 }
 
 function starterComponent(_options: Schema, tree: Tree, _context: SchematicContext): Rule {

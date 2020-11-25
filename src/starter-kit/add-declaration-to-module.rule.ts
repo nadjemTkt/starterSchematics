@@ -19,10 +19,15 @@ export function addDeclarationToAppModule(appModule: string, option: Schema, typ
       const sourceText = text.toString('utf-8');
       const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
       // Part II: Find out, what to change
-/*       console.log({source})
- */      
+           
+      const componentPath = option.path === 'src/app' ? kebab(option.name) : (kebab(option.path).replace('src/app/','') +'/'+ kebab(option.name))
       const typeDeclaration = type === 'declarations' ? capitalize('component') : capitalize('service')
-      const changes = addSymbolToNgModuleMetadata(source, modulePath, type, capitalize(option.name)+typeDeclaration, './'+kebab(option.name)+'/'+kebab(option.name)+(type === 'declarations' ? '.component':'.service'));
+      const changes = addSymbolToNgModuleMetadata(
+        source, 
+        modulePath, 
+        type, 
+        capitalize(option.name)+typeDeclaration, 
+        './'+componentPath+'/'+kebab(option.name)+(type === 'declarations' ? '.component':'.service'));
 
       // Part III: Apply changes
       const recorder = host.beginUpdate(modulePath);
