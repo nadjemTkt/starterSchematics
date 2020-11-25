@@ -7,7 +7,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class <%= classify(name) %>Component implements OnInit {
-componentName = "<%= dasherize(name) %>";
+  public componentName = "<%= dasherize(name) %>";
   constructor() { }
 
   ngOnInit(): void {
