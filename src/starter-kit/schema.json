@@ -34,19 +34,11 @@
         "withService": {
             "type": "boolean",
             "default": true,
+            "description": "create associate service default true",
             "$default":{
                 "$source":"argv",
                 "index": 0
             }
-        },
-        "withRoute": {
-            "type": "boolean",
-            "default": false,
-            "$default":{
-                "$source":"argv",
-                "index": 0
-            },
-          "x-prompt": "update default router module ?"
         }
     },
     "required": ["name"]
