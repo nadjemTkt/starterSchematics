@@ -1,14 +1,27 @@
-import {chain, Rule, SchematicContext, Tree, apply, mergeWith, template, url, move,branchAndMerge } from '@angular-devkit/schematics';
+import {chain, Rule, SchematicContext, Tree, apply, mergeWith, template, url, move,branchAndMerge, SchematicsException } from '@angular-devkit/schematics';
 import { strings, join, Path } from '@angular-devkit/core'
 import { getWorkspace } from "@schematics/angular/utility/config";
 import { Schema } from './schema';
 import { addDeclarationToAppModule } from './add-declaration-to-module.rule';
-const servicePaths = ['/services', 'src/services', 'src/app/services']
-
+import { parseName } from "@schematics/angular/utility/parse-name"
+import { buildDefaultPath } from '@schematics/angular/utility/project';
 // You don't have to export the function as default. You can also have more than one rule factory
 // per file.
 export function generateComponent(_options: Schema): Rule {
   return (tree: Tree, _context: SchematicContext) => {
+    const workspaceConfigBuffer = tree.read("angular.json");
+    if(!workspaceConfigBuffer){
+      throw new SchematicsException('Not an Angular CLI workspace');
+    }
+    const workspaceConfig = JSON.parse(workspaceConfigBuffer.toString());
+    const projectName = _options.project || workspaceConfig.defaultProject;
+    const project = workspaceConfig.projects[projectName];
+
+    const defaultProjectPath = buildDefaultPath(project);
+
+    const parsedPath = parseName(defaultProjectPath, _options.name)
+    const {name, path} = parsedPath;
+    console.log({name,path})
     return chain([
       starterComponent(_options,tree,_context),
       moduleAddComponent(_options,tree,_context),
