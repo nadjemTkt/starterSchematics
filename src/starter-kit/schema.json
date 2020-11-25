@@ -31,6 +31,16 @@
             },
             "x-prompt": "choose path to create component :"
         },
+        "module":{
+            "type":"string",
+            "default": "src/app/app.module.ts",
+            "description": "module path for component declaration",
+            "$default":{
+                "$source":"argv",
+                "index": 0
+            },
+            "x-prompt": "choose module path for component declaration :"
+        },
         "withService": {
             "type": "boolean",
             "default": true,
@@ -39,7 +49,17 @@
                 "$source":"argv",
                 "index": 0
             }
+        },
+        "withModule": {
+            "type": "boolean",
+            "default": false,
+            "description": "create associate module default false",
+            "$default":{
+                "$source":"argv",
+                "index": 0
+            }
         }
+
     },
     "required": ["name"]
 
