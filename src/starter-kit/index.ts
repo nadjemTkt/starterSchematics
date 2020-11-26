@@ -21,13 +21,17 @@ export function generateComponent(_options: Schema): Rule {
 
     const parsedPath = parseName(defaultProjectPath, _options.name)
     const {name, path} = parsedPath;
-   
+   if(!_options.withModule){
     return chain([
       starterComponent(_options,tree,_context),
       moduleAddComponent(_options,tree,_context),
       addService(_options,tree,_context),
       moduleAddService(_options,tree,_context)
     ])(tree, _context);
+   }else{
+     
+   }
+    
   };
 }
 
