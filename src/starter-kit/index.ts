@@ -79,6 +79,7 @@ function starterComponentWithModule(_options: Schema, tree: Tree, _context: Sche
 }
 
 function moduleAddComponent(_options: Schema,tree: Tree, _context: SchematicContext): Rule {
+  
   return () => {
     const appModule = _options.module ? _options.module : 'src/app/app.module.ts';
     const rule = branchAndMerge(addDeclarationToAppModule(appModule, _options, 'declarations'));
@@ -94,6 +95,7 @@ function moduleAddService(_options: Schema,tree: Tree, _context: SchematicContex
 }
 
 function withModuleAddModule(_options: Schema,tree: Tree, _context: SchematicContext): Rule {
+  console.log({_options})
   return () => {
     const appModule = _options.module ? _options.module : 'src/app/app.module.ts';
     const rule = branchAndMerge(addDeclarationToAppModule(appModule, _options, 'imports'));
