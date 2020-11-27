@@ -5,6 +5,7 @@ import { Schema } from './schema';
 import { addDeclarationToAppModule } from './add-declaration-to-module.rule';
 import { parseName } from "@schematics/angular/utility/parse-name"
 import { buildDefaultPath } from '@schematics/angular/utility/project';
+import { dasherize } from '@angular-devkit/core/src/utils/strings';
 // You don't have to export the function as default. You can also have more than one rule factory
 // per file.
 export function generateComponent(_options: Schema): Rule {
@@ -22,6 +23,7 @@ export function generateComponent(_options: Schema): Rule {
     const parsedPath = parseName(defaultProjectPath, _options.name)
     const {name, path} = parsedPath;
    if(!_options.withModule){
+    console.log({withModule:_options.withModule})
     return chain([
       starterComponent(_options,tree,_context),
       moduleAddComponent(_options,tree,_context),
@@ -29,7 +31,12 @@ export function generateComponent(_options: Schema): Rule {
       moduleAddService(_options,tree,_context)
     ])(tree, _context);
    }else{
-     
+     console.log({withModule:_options.withModule})
+     return chain([
+      starterComponentWithModule(_options,tree,_context),
+      withModuleAddModule(_options,tree,_context),
+
+    ])(tree, _context);
    }
     
   };
@@ -53,6 +60,24 @@ function starterComponent(_options: Schema, tree: Tree, _context: SchematicConte
   };
 }
 
+function starterComponentWithModule(_options: Schema, tree: Tree, _context: SchematicContext): Rule {
+  return () => {
+    if(!tree){
+      return
+    }
+    const path = _options.path ? _options.path : 'src/app'
+    const sourceTemplates = url('./templates-with-module');  
+    const sourceParametrizedTemplates = apply(sourceTemplates, [
+      template({
+        ..._options,
+        ...strings
+      }),
+      move(path),
+    ]);  
+    return mergeWith(sourceParametrizedTemplates);
+  };
+}
+
 function moduleAddComponent(_options: Schema,tree: Tree, _context: SchematicContext): Rule {
   return () => {
     const appModule = _options.module ? _options.module : 'src/app/app.module.ts';
@@ -61,6 +86,21 @@ function moduleAddComponent(_options: Schema,tree: Tree, _context: SchematicCont
   };
 }
 function moduleAddService(_options: Schema,tree: Tree, _context: SchematicContext): Rule {
+  return () => {
+    const appModule = _options.module ? _options.module : 'src/app/app.module.ts';
+    const rule = branchAndMerge(addDeclarationToAppModule(appModule, _options, 'providers'));
+    return rule(tree, _context);
+  };
+}
+
+function withModuleAddModule(_options: Schema,tree: Tree, _context: SchematicContext): Rule {
+  return () => {
+    const appModule = _options.module ? _options.module : 'src/app/app.module.ts';
+    const rule = branchAndMerge(addDeclarationToAppModule(appModule, _options, 'imports'));
+    return rule(tree, _context);
+  };
+}
+function withModuleAddService(_options: Schema,tree: Tree, _context: SchematicContext): Rule {
   return () => {
     const appModule = _options.module ? _options.module : 'src/app/app.module.ts';
     const rule = branchAndMerge(addDeclarationToAppModule(appModule, _options, 'providers'));
