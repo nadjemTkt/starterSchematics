@@ -4,8 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class <%= classify(name) %>Service {
 
-  private <%= camelize(dataName) %> = new BehaviorSubject('First Message');
-  shared<%= classify(name) %> = this.<%= camelize(dataName) %>.asObservable();
+  private <%= camelize(dataName) %> = new BehaviorSubject( <%= typeSelector(dataType) %> );
+  shared<%= classify(dataName) %> = this.<%= camelize(dataName) %>.asObservable();
 
   constructor() { }
 

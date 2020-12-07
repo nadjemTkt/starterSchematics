@@ -60,7 +60,11 @@ export function generateSharedService(_options: Schema): Rule {
 
     const parsedPath = parseName(defaultProjectPath, _options.name)
     const {name, path} = parsedPath;
-    console.log(_options)
+    
+    return chain([
+      starterService(_options,tree,_context),
+      moduleAddService(_options,tree,_context)
+    ])(tree, _context);
   }
 }
 
@@ -137,8 +141,8 @@ function addService(_options: Schema, tree: Tree, _context: SchematicContext): R
     if(!tree){
       return
     }
-    const path = _options.path ? _options.path : 'src/app/services'
-    const sourceTemplates = url('./templates-sharing-service');
+    const path = _options.path ? _options.path : 'src/app/'
+    const sourceTemplates = url('./templates-services');
     const sourceParametrizedTemplates = apply(sourceTemplates, [
       template({
         ..._options,
@@ -150,3 +154,26 @@ function addService(_options: Schema, tree: Tree, _context: SchematicContext): R
   }
 }
 
+function starterService(_options: Schema, tree: Tree, _context: SchematicContext): Rule{
+  return () => {
+    if(!tree){
+      return
+    }
+    const path = _options.path ? _options.path : 'src/app/services/'
+    const sourceTemplates = url('./templates-sharing-service');
+    const sourceParametrizedTemplates = apply(sourceTemplates, [
+      template({
+        ..._options,
+        ...strings,
+        typeSelector
+      }),
+      move(path),
+    ]);  
+    
+    return mergeWith(sourceParametrizedTemplates);
+  }
+}
+
+function typeSelector(value: string): any {
+ return value === 'string'? 'first value' : (value === 'boolean' ? false : {})
+}

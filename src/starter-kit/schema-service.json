@@ -54,7 +54,7 @@
         },
         "path":{
             "type":"string",
-            "default": "src/app",
+            "default": "src/app/services",
             "description": "the path for component",
             "$default":{
                 "$source":"argv",
