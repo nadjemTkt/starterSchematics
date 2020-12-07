@@ -175,5 +175,5 @@ function starterService(_options: Schema, tree: Tree, _context: SchematicContext
 }
 
 function typeSelector(value: string): any {
- return value === 'string'? 'first value' : (value === 'boolean' ? false : {})
+ return value === 'string'? "new BehaviorSubject('first value')" : (value === 'boolean' ? "new BehaviorSubject(false)" : "new Subject<any>()" )
 }
