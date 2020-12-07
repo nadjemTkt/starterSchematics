@@ -2,7 +2,7 @@ import {chain, Rule, SchematicContext, Tree, apply, mergeWith, template, url, mo
 import { strings, join, Path } from '@angular-devkit/core'
 import { getWorkspace } from "@schematics/angular/utility/config";
 import { Schema } from './schema';
-import { addDeclarationToAppModule } from './add-declaration-to-module.rule';
+import { addDeclarationToAppModule } from './declaration/add-declaration-to-module.rule';
 import { parseName } from "@schematics/angular/utility/parse-name"
 import { buildDefaultPath } from '@schematics/angular/utility/project';
 import { dasherize } from '@angular-devkit/core/src/utils/strings';
