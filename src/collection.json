@@ -5,6 +5,11 @@
       "description": "custom component schematic.",
       "factory": "./starter-kit/index#generateComponent",
       "schema":"./starter-kit/schema.json"
+    },
+    "custom-service-kit": {
+      "description": "custom service schematic.",
+      "factory": "./starter-kit/index#generateSharedService",
+      "schema":"./starter-kit/schema-service.json"
     }
   }
 }

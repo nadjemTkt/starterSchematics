@@ -1,9 +1,9 @@
 import { Rule, Tree, SchematicsException } from '@angular-devkit/schematics';
 import { normalize } from '@angular-devkit/core';
 import * as ts from 'typescript';
-import { addSymbolToNgModuleMetadata } from '../utility/ast-utils';
-import { InsertChange } from "../utility/change";
-import { Schema } from './schema';
+import { addSymbolToNgModuleMetadata } from '../../utility/ast-utils';
+import { InsertChange } from "../../utility/change";
+import { Schema } from '../schema';
 
 export function addDeclarationToAppModule(appModule: string, option: Schema, type: string): Rule {
     return (host: Tree) => {

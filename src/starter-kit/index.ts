@@ -35,11 +35,33 @@ export function generateComponent(_options: Schema): Rule {
      return chain([
       starterComponentWithModule(_options,tree,_context),
       withModuleAddModule(_options,tree,_context),
-
+      addService(_options,tree,_context),
+      moduleAddService(_options,tree,_context)
     ])(tree, _context);
    }
     
   };
+}
+
+export function generateSharedService(_options: Schema): Rule {
+   /* tslint:disable:no-unused-variable */
+  return (tree: Tree, _context: SchematicContext) => {
+   /*  console.log({tree})
+    console.log({_context}) */
+    const workspaceConfigBuffer = tree.read("angular.json");
+    if(!workspaceConfigBuffer){
+      throw new SchematicsException('Not an Angular CLI workspace');
+    }
+    const workspaceConfig = JSON.parse(workspaceConfigBuffer.toString());
+    const projectName = _options.project || workspaceConfig.defaultProject;
+    const project = workspaceConfig.projects[projectName];
+
+    const defaultProjectPath = buildDefaultPath(project);
+
+    const parsedPath = parseName(defaultProjectPath, _options.name)
+    const {name, path} = parsedPath;
+    console.log(_options)
+  }
 }
 
 function starterComponent(_options: Schema, tree: Tree, _context: SchematicContext): Rule {
@@ -115,8 +137,8 @@ function addService(_options: Schema, tree: Tree, _context: SchematicContext): R
     if(!tree){
       return
     }
-    const path = _options.path ? _options.path : 'src/app'
-    const sourceTemplates = url('./templates-services');
+    const path = _options.path ? _options.path : 'src/app/services'
+    const sourceTemplates = url('./templates-sharing-service');
     const sourceParametrizedTemplates = apply(sourceTemplates, [
       template({
         ..._options,

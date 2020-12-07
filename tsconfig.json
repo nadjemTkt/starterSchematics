@@ -32,6 +32,7 @@
     "src/*/files/**/*",
     "src/*/templates/**/*",
     "src/*/templates-services/**/*",
+    "src/*/templates-sharing-service/**/*",
     "src/*/templates-with-module/**/*"
   ]
 }
