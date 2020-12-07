@@ -30,7 +30,7 @@ export function addDeclarationToAppModule(appModule: string, option: Schema, typ
       const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
       // Part II: Find out, what to change
            
-      const componentPath = option.path === 'src/app' || isFullCustom ? kebab(option.name) : (kebab(option.path).replace('src/app/','') +'/'+ kebab(option.name))
+      const componentPath = option.path === 'src/app' || isFullCustom ? kebab(option.name) : (!!option.dataName ? kebab(option.name) : (kebab(option.path).replace('src/app/','') +'/'+ kebab(option.name)))
       const typeDeclaration = type === 'declarations' ? capitalize('component') : (type === 'providers' ? capitalize('service'):capitalize('module'))
       const changes = addSymbolToNgModuleMetadata(
         source, 

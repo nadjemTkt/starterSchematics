@@ -5,4 +5,5 @@ export interface Schema {
     path: string;
     withService: boolean;
     withModule: boolean;
+    dataName?:string
 }
