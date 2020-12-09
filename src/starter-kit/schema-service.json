@@ -45,13 +45,6 @@
                 ]
             }
         }, 
-        "project": {
-            "type": "string",
-            "description": "The name of the project.",
-            "$default": {
-              "$source": "projectName"
-            }
-        },
         "path":{
             "type":"string",
             "default": "src/app/services",
@@ -71,26 +64,7 @@
                 "index": 0
             },
             "x-prompt": "choose module path for component declaration :"
-        },
-        "withService": {
-            "type": "boolean",
-            "default": true,
-            "description": "create associate service default true",
-            "$default":{
-                "$source":"argv",
-                "index": 0
-            }
-        },
-        "withModule": {
-            "type": "boolean",
-            "default": false,
-            "description": "create associate module default false",
-            "$default":{
-                "$source":"argv",
-                "index": 0
-            }
         }
-
     },
     "required": ["name"]
 

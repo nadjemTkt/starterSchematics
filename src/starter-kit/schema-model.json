@@ -1,0 +1,39 @@
+{
+    "$schema":"http://json-schema.org/schema",
+    "id":"ComponentSchematics",
+    "title": "Model Options Schema",
+    "type": "object",
+    "description": "the option of model",
+    "properties": {
+        "name":{
+            "type":"string",
+            "description": "the model name",
+            "$default":{
+                "$source":"argv",
+                "index": 0
+            },
+            "x-prompt": "choose model name :"
+        },
+        "properties":{
+            "type":"string",
+            "description": "the model properties name & type separated by comma (ex:username/string)",
+            "$default":{
+                "$source":"argv",
+                "index": 0
+            },
+            "x-prompt": "choose model properties name & type separated by comma (ex:username/string , email/string) :"
+        },  
+        "path":{
+            "type":"string",
+            "default": "src/app/models",
+            "description": "the path for component",
+            "$default":{
+                "$source":"argv",
+                "index": 0
+            },
+            "x-prompt": "choose path to create component :"
+        }
+    },
+    "required": ["name"]
+
+}

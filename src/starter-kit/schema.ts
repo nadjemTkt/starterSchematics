@@ -6,4 +6,6 @@ export interface Schema {
     withService: boolean;
     withModule: boolean;
     dataName?:string
+    properties?:string
+    props?:any
 }

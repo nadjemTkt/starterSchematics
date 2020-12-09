@@ -10,6 +10,11 @@
       "description": "custom service schematic.",
       "factory": "./starter-kit/index#generateSharedService",
       "schema":"./starter-kit/schema-service.json"
+    },
+    "custom-model-kit": {
+      "description": "custom model schematic.",
+      "factory": "./starter-kit/index#generateModel",
+      "schema":"./starter-kit/schema-model.json"
     }
   }
 }
