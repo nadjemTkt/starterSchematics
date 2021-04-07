@@ -1,6 +1,12 @@
 import {chain, Rule, SchematicContext, Tree, apply, mergeWith, template, url, move,branchAndMerge, SchematicsException } from '@angular-devkit/schematics';
+import {
+  NodePackageInstallTask,
+  RunSchematicTask,
+} from '@angular-devkit/schematics/tasks';
 import { strings, join, Path } from '@angular-devkit/core'
 import { getWorkspace } from "@schematics/angular/utility/config";
+import { getPackageJson } from './common/utils';
+
 import { Schema } from './schema';
 import { addDeclarationToAppModule } from './declaration/add-declaration-to-module.rule';
 import { parseName } from "@schematics/angular/utility/parse-name"
@@ -42,7 +48,47 @@ export function generateComponent(_options: Schema): Rule {
     
   };
 }
+export function addTailwind(_options: Schema): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const workspaceConfigBuffer = tree.read("angular.json");
+    if(!workspaceConfigBuffer){
+      throw new SchematicsException('Not an Angular CLI workspace');
+    }
+    const workspace = getWorkspace(tree);
+    const packageJson = getPackageJson(tree);
+    const projectName = _options.project || workspace.defaultProject;
 
+    const coreVersion: string = packageJson.dependencies['@angular/core'];
+
+    if (!coreVersion) {
+      throw new SchematicsException(
+        'Could not find @angular/core version in package.json.',
+      );
+    }
+
+    const majorVersion: number = parseInt(
+      coreVersion.split('.')[0].replace(/\D/g, ''),
+      10,
+    );
+
+    if (majorVersion < 8) {
+      throw new SchematicsException('Minimum version requirement not met.');
+    }
+
+   // 2. run schematic that chain a set of schematics that will add and update files
+    const setupId = _context.addTask(
+      new RunSchematicTask('ng-add-setup', { project: projectName }),
+    );
+
+   // 3. Install dependencies (or skip installation)
+    if(!_options.skipInstall){
+      _context.addTask(new NodePackageInstallTask(), [setupId]);
+    }
+    
+    console.log('addTailwind')
+  }
+  
+}
 export function generateSharedService(_options: Schema): Rule {
    /* tslint:disable:no-unused-variable */
   return (tree: Tree, _context: SchematicContext) => {
