@@ -15,6 +15,17 @@
       "description": "custom model schematic.",
       "factory": "./starter-kit/index#generateModel",
       "schema":"./starter-kit/schema-model.json"
+    },
+    "add-Tailwind-css": {
+      "description": "Schematics to setup Tailwind for Angular applications in AngularCLI/Nx Workspace (with Angular CLI)",
+      "factory": "./starter-kit/index#addTailwind",
+      "schema": "./starter-kit/schema-tailwind.json"
+    },
+    "ng-add-setup": {
+      "description": "Setups project before installing dependencies",
+      "factory": "./starter-kit/ng-add-setup/index#ngAddSetup",
+      "private": true,
+      "schema": "./starter-kit/ng-add-setup/schema.json"
     }
   }
 }
